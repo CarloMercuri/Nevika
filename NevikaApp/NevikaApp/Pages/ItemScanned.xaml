@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NevikaApp.Pages.ItemScanned">
+    <StackLayout Margin="20, 40, 20, 20">
+        <Grid Padding="5, 5, 10, 40" ColumnSpacing="5" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Image x:Name="ProductIconSlot"
+               Source="icon_3.png"
+               WidthRequest="100"
+               HeightRequest="100"
+               Grid.Row="0"
+               Grid.Column="0"/>
+            <Label x:Name="ProductNameSlot"
+               Text="Choko-Crisps"
+               FontSize="24"
+               Grid.Row="0"
+               Grid.Column="1" />
+        </Grid>
+        
+        <Label Text="Ingredienter:"
+               FontSize="16"
+               TextColor="Black"
+               HorizontalTextAlignment="Center"/>
+
+        <Label x:Name="ProductIngredientsSlot"
+               FontSize="16"
+               TextColor="Black"
+               HorizontalTextAlignment="Center"/>
+
+        <Label Text="Allergener i scannet vare:"
+               FontSize="16"
+               TextColor="Gray"
+               HorizontalTextAlignment="Center"/>
+
+        <Label x:Name="ProductFoundAllergensSlot"
+               FontSize="16"
+               TextColor="Red"
+               HorizontalTextAlignment="Center"/>
+
+    </StackLayout>
+</ContentPage>
