@@ -22,7 +22,7 @@ namespace NevikaApp.Pages
 
 
 
-            allergensListView.ItemsSource = App.AllergensList;
+            allergensListView.ItemsSource = LocalDatabase.AllergensList;
 
         }
 
@@ -33,14 +33,14 @@ namespace NevikaApp.Pages
 
             if(allergen != null)
             {
-                int index = App.AllergensList.FindIndex(al => al.DanishName == allergen.DanishName);
+                int index = LocalDatabase.AllergensList.FindIndex(al => al.DanishName == allergen.DanishName);
                 Console.WriteLine($"Index found is: {index}");
-                App.AllergensList[index].Selected = checkbox.IsChecked;
+                LocalDatabase.AllergensList[index].Selected = checkbox.IsChecked;
 
-                using (SQLite.SQLiteConnection conn = new SQLite.SQLiteConnection(App.DB_PATH))
+                using (SQLite.SQLiteConnection conn = new SQLite.SQLiteConnection(LocalDatabase.LOCAL_DB_PATH))
                 {
                     //Console.WriteLine($"Before: {conn.Get<Allergen>(App.AllergensList[index].Id).Selected}, should change to: {App.AllergensList[index].Selected}");
-                    conn.Update(App.AllergensList[index]);
+                    conn.Update(LocalDatabase.AllergensList[index]);
                     //Allergen al = conn.Get<Allergen>(index);
                     //Console.WriteLine($"After: {conn.Get<Allergen>(App.AllergensList[index].Id).Selected}");
 

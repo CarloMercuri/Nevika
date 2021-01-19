@@ -21,20 +21,15 @@ namespace NevikaApp.API
             using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(ean_code))
             {
 
-                Console.WriteLine("Waiting for response");
-
                 if (response.IsSuccessStatusCode)
                 {
                     Product myProduct = JsonConvert.DeserializeObject<Product>(
                         await response.Content.ReadAsStringAsync());
 
-                    Console.WriteLine("Returning something");
-
                     return myProduct;
                 }
                 else
                 {
-                    Console.WriteLine("Returning null");
                     return null;
                 }
 

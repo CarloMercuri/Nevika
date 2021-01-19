@@ -34,37 +34,47 @@ namespace NevikaApp.Pages
 
         private async void GetProductInfo(string ean_code)
         {
-            var product = await ProductProcessor.RequestProductInfo(ean_code);
+            Product product = await ProductProcessor.RequestProductInfo(ean_code);
 
-            //Product prod = (Product)product;
-            Product prod = (Product)product;
-
-            if (prod != null)
+            if (product != null)
             {
-                ApplyProduct(prod);
-                
-                Console.WriteLine(prod.Product_Name);
-                Console.WriteLine(prod.Product_Brand);
-                Console.WriteLine(prod.Product_Ingredients_Text);
+                ProductIconSlot.IsVisible = true;
+                ProductNameSlot.IsVisible = true;
+                LoadingCircle.IsRunning = false;
+
+                ApplyProduct(product);
             }
             else
             {
+                ProductIconSlot.IsVisible = true;
+                ProductNameSlot.IsVisible = true;
+                LoadingCircle.IsRunning = false;
+
                 ChangeName("NULL");
-                Console.WriteLine("PRODUCT IS NULL");
             }
-
-
-            //Console.WriteLine();
         }
 
         private void ApplyProduct(Product product)
         {
             ChangeName(product.Product_Name);
-            ProductIngredientsSlot.Text = product.Product_Ingredients_Text;
+
+            Console.WriteLine(product.Product_Ingredients_Text);
+
+            if(product.Product_Ingredients_Text == "NULL" || product.Product_Ingredients_Text.Length <= 0)
+            {
+                ProductIngredientsSlot.Text = "";
+                Label_Ingredients.Text = "Ingen ingredienser fundet";
+            }
+            else
+            {
+                Label_Ingredients.Text = "Ingredienser:";
+                ProductIngredientsSlot.Text = product.Product_Ingredients_Text;
+                
+            }
 
             string allergensText = "";
 
-            foreach (Allergen al in App.AllergensList)
+            foreach (Allergen al in LocalDatabase.AllergensList)
             {
                 if(product.Product_Ingredients_Text.ToLower().Contains(al.DanishName.ToLower()) && al.Selected)
                 {
@@ -77,7 +87,17 @@ namespace NevikaApp.Pages
                 }
             }
 
-            ProductFoundAllergensSlot.Text = allergensText;
+            if(allergensText.Length > 0)
+            {
+                Label_Allergens.Text = "Allergener i varen:";
+                ProductFoundAllergensSlot.Text = allergensText;
+            }
+            else
+            {
+                Label_Allergens.Text = "Ingen allergener fundet";
+            }
+
+            
         }
 
         private void ChangeName(string name)
@@ -89,8 +109,11 @@ namespace NevikaApp.Pages
         {
             base.OnAppearing();
 
+            ProductIconSlot.IsVisible = false;
+            ProductNameSlot.IsVisible = false;
+
             //ProductIconSlot.Source = App.ScannedProduct.IconName;
-            ProductNameSlot.Text = "Loading";
+            //ProductNameSlot.Text = "Loading";
 
             GetProductInfo(Scanned_EAN);
 
