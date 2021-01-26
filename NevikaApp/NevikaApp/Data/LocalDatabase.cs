@@ -12,6 +12,10 @@ namespace NevikaApp.Data
         public static void InitializeLocalDatabase(string db_path)
         {
             LOCAL_DB_PATH = db_path;
+
+            // Temporary, because the allergens are not on the database yet. The idea is to keep
+            // a local database with the allergens instead of having to query everytime we open the app,
+            // and check every now and then that it's synchronized
             InsertTempAllergens();
             PopulateAllergenList();
         }

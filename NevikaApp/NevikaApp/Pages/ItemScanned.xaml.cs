@@ -28,25 +28,69 @@ namespace NevikaApp.Pages
         {
             Scanned_EAN = ean_code;
 
-
+            // Next in line is OnAppearing()
             InitializeComponent();
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            // First thing is hide these controls, so that we are only showing
+            // the loading icon
+            ProductIconSlot.IsVisible = false;
+            ProductNameSlot.IsVisible = false;
+
+            // Let's try and find the product
+            GetProductInfo(Scanned_EAN);
+
+        }
+
+        /// <summary>
+        /// Queries the API on nevika.taotek.dk for a product
+        /// </summary>
+        /// <param name="ean_code"></param>
         private async void GetProductInfo(string ean_code)
         {
+            // Try and get a product
             Product product = await ProductProcessor.RequestProductInfo(ean_code);
 
             if (product != null)
             {
+                // If the product is found, stop the loading icon and activate the other slots.
+                // All of this is temporary
+
                 ProductIconSlot.IsVisible = true;
                 ProductNameSlot.IsVisible = true;
                 LoadingCircle.IsRunning = false;
 
+                // ONLY FOR TESTING, need to implement the icons in the database first
+                switch(ean_code)
+                {
+                    case "8710398169280":
+                        ProductIconSlot.Source = "Cruesli.png";
+                        break;
+
+                    case "5000159461122":
+                        ProductIconSlot.Source = "snickers.jpg";
+                        break;
+
+                    case "25065244":
+                        ProductIconSlot.Source = "Milk.png";
+                        break;
+
+                    default:
+                        ProductIconSlot.IsVisible = false;
+                        break;
+                }
+
+                // If successful, apply the product information on the page
                 ApplyProduct(product);
             }
             else
             {
-                ProductIconSlot.IsVisible = true;
+                // Else nope.
+                // All of the frontend for this page is very temporary
                 ProductNameSlot.IsVisible = true;
                 LoadingCircle.IsRunning = false;
 
@@ -74,6 +118,8 @@ namespace NevikaApp.Pages
 
             string allergensText = "";
 
+            // Again temporary until we decide exactly how to do this. For now it just looks for a match in the 
+            // ingredients text.
             foreach (Allergen al in LocalDatabase.AllergensList)
             {
                 if(product.Product_Ingredients_Text.ToLower().Contains(al.DanishName.ToLower()) && al.Selected)
@@ -87,6 +133,7 @@ namespace NevikaApp.Pages
                 }
             }
 
+            // If it found something, the string is gonna be > 0
             if(allergensText.Length > 0)
             {
                 Label_Allergens.Text = "Allergener i varen:";
@@ -105,18 +152,6 @@ namespace NevikaApp.Pages
             ProductNameSlot.Text = name;
         }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            ProductIconSlot.IsVisible = false;
-            ProductNameSlot.IsVisible = false;
-
-            //ProductIconSlot.Source = App.ScannedProduct.IconName;
-            //ProductNameSlot.Text = "Loading";
-
-            GetProductInfo(Scanned_EAN);
-
-        }
+       
     }
 }

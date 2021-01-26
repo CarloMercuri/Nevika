@@ -13,16 +13,13 @@ namespace NevikaApp.API
     {
         public static async Task<Product> RequestProductInfo(string ean_code = "")
         {
-            Console.WriteLine($"RequestProductInfo, code: {ean_code}");
-
-            // httpClient.GetAsync(ApiUrl).ConfigureAwait(false).GetAwaiter().GetResult();
-            // await ApiHelper.ApiClient.GetAsync(ean_code))
-
+            // Attempt to get something from the database
             using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(ean_code))
             {
-
                 if (response.IsSuccessStatusCode)
                 {
+                    // Works as long as the properties match the database
+                    // TODO: more
                     Product myProduct = JsonConvert.DeserializeObject<Product>(
                         await response.Content.ReadAsStringAsync());
 

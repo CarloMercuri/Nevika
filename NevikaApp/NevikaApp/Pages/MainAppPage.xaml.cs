@@ -39,6 +39,8 @@ namespace NevikaApp.Pages
 
         private async void ButtonActivateScan_Clicked(object sender, EventArgs e)
         {
+            // Open a new page with the scanner. using ZXingNetMobile.
+
             scanPage = new ZXingScannerPage();
             scanPage.OnScanResult += (result) =>
             {
@@ -46,7 +48,8 @@ namespace NevikaApp.Pages
 
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    //App.ScannedProduct = product;
+                    // Once it finds a barcode, we're gonna open the ItemScanned page and give it
+                    // the barcode it scanned. All processing is done there.
                     await Navigation.PopModalAsync();
                     await Navigation.PushModalAsync(new ItemScanned(result.Text));
                 });

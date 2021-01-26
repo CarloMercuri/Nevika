@@ -26,6 +26,7 @@ namespace NevikaApp
             // Initializations
             ApiHelper.InitializeClient();
 
+
             LocalDatabase.InitializeLocalDatabase(_db_path);
 
             MainPage = new NavigationPage(new SplashPage());

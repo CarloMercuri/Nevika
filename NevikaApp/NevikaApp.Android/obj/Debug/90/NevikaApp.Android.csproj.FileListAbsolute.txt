@@ -533,3 +533,6 @@ D:\dev\NevikaApp\NevikaApp\NevikaApp.Android\obj\Debug\90\res\drawable\icon_1.pn
 D:\dev\NevikaApp\NevikaApp\NevikaApp.Android\obj\Debug\90\res\drawable\icon_2.png
 D:\dev\NevikaApp\NevikaApp\NevikaApp.Android\obj\Debug\90\res\drawable\icon_3.png
 D:\dev\NevikaApp\NevikaApp\NevikaApp.Android\obj\Debug\90\android\assets\Newtonsoft.Json.dll
+D:\dev\NevikaApp\NevikaApp\NevikaApp.Android\obj\Debug\90\res\drawable\cruesli.png
+D:\dev\NevikaApp\NevikaApp\NevikaApp.Android\obj\Debug\90\res\drawable\milk.png
+D:\dev\NevikaApp\NevikaApp\NevikaApp.Android\obj\Debug\90\res\drawable\snickers.jpg
