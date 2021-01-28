@@ -47,6 +47,8 @@ namespace NevikaApp
             //await this.Navigation.PushAsync(new ScanningPage(), true);
 
             Application.Current.MainPage = new MainAppPage();
+           // Application.Current.MainPage = new TestPage();
+
            
             //Application.Current.MainPage = new NavigationPage(new MainAppPage());
             //Application.Current.MainPage = new NavigationPage(new ItemScanned("456456"));
